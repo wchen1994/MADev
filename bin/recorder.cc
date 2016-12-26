@@ -1,10 +1,13 @@
-#include "Recorder.h"
+#include <SFML/Audio.hpp>
+#include <iostream>
+
+using namespace sf;
 
 int main(){
-	Recorder recorder;
-	recorder.SetSaveDir("save.wav");
-	recorder.Record();
+	SoundBuffer buffer;
+	SoundBufferRecorder recorder;
 	
+	recorder.start(44100);
 	std::cout << "Press q to quit." << std::endl;
 	char cmd;
 	std::cin >> cmd;
@@ -12,8 +15,10 @@ int main(){
 		std::cin >> cmd;
 	}
 
-	recorder.Stop();
-	recorder.Save();
+	recorder.stop();
+	buffer = recorder.getBuffer();
+	std::cout << "Samples: " <<  buffer.getSampleCount() << std::endl;
+	buffer.saveToFile("save.wav");
 
 	return 0;
 }

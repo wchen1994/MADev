@@ -39,7 +39,7 @@ bool Recorder::Save(){
 }
 
 void Recorder::Record(){
-	bufferRecorder.start();
+	bufferRecorder.start(sampleRate);
 }
 
 void Recorder::Stop(){
