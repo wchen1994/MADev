@@ -9,9 +9,8 @@ int main(){
 	int rc = player.openFromFile(filename);
 	if (rc){
 		player.play();
-		while(player.getStatus() == sf::SoundSource::Status.Playing){
+		while(player.getStatus() == sf::Sound::Playing){
 			sf::sleep(sf::milliseconds(10));
-			std::cout << player.getStatus() << std::endl;
 		}
 	}
 
