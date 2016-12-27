@@ -12,7 +12,7 @@ private:
 	sf::CircleShape Sprite;
 public:
 	Player(sf::RenderWindow *wnd) :
-	Sprite(50)	
+		Sprite(50)	
 	{
 		this->wnd = wnd;
 	}
@@ -21,19 +21,31 @@ public:
 	}
 };
 
-void handleKeyPressed(sf::Event::KeyEvent key){
-	sf::Keyboard::Key keycode = key.code;
-	std::cout << keycode << std::endl;
-}
+class Game{
+private:
+	sf::RenderWindow wnd;
+	sf::Event event;
+	Player player;
+public:
+	Game() :
+		wnd(sf::VideoMode(800,600), "GAME"),
+		player(&wnd)
+	{
+		wnd.setFramerateLimit(60);
+	}
 
-int main(){
-	sf::RenderWindow wnd(sf::VideoMode(800,600), "GAME");
-	wnd.setFramerateLimit(60);
+	void handleKeyPressed(sf::Event::KeyEvent key){
+		sf::Keyboard::Key keycode = key.code;
+		std::cout << keycode << std::endl;
+	}
 
-	Player player(&wnd);
+	void Run(){
+		while(wnd.isOpen()){
+			Update();
+		}
+	}
 
-	while(wnd.isOpen()){
-		sf::Event event;
+	void Update(){
 		while(wnd.pollEvent(event)){
 			switch (event.type){
 				case sf::Event::KeyPressed:
@@ -50,6 +62,12 @@ int main(){
 		player.Update();
 		wnd.display();
 	}
+};
+
+
+int main(){
+	Game game;
+	game.Run();
 
 	return 0;
 }
