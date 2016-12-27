@@ -9,15 +9,32 @@ A touhou like game
 class Player{
 private:
 	sf::RenderWindow *wnd;
-	sf::CircleShape Sprite;
+	sf::CircleShape sprite;
+	float x, y;
+	float originX, originY;
+	float radius;
 public:
 	Player(sf::RenderWindow *wnd) :
-		Sprite(50)	
+		sprite()
 	{
 		this->wnd = wnd;
+		radius = 50;
+		x = 400;
+		y = 300;
+		originX = originY = radius;
+		sprite.setRadius(radius);
+		sprite.setOrigin(originX, originY);
+		sprite.setPosition(x, y);
 	}
-	void Update(){
-		wnd->draw(Sprite);
+
+	void Draw(){
+		wnd->draw(sprite);
+	}
+
+	void Move(float dx, float dy){
+		x += dx;
+		y += dy;
+		sprite.setPosition(x, y);
 	}
 };
 
@@ -36,7 +53,22 @@ public:
 
 	void handleKeyPressed(sf::Event::KeyEvent key){
 		sf::Keyboard::Key keycode = key.code;
-		std::cout << keycode << std::endl;
+		switch (keycode){
+			case sf::Keyboard::W:
+				player.Move(0,-30);
+				break;
+			case sf::Keyboard::S:
+				player.Move(0,30);
+				break;
+			case sf::Keyboard::A:
+				player.Move(-30,0);
+				break;
+			case sf::Keyboard::D:
+				player.Move(30,0);
+				break;
+			default:
+				break;
+		}
 	}
 
 	void Run(){
@@ -59,7 +91,7 @@ public:
 			}
 		}
 		wnd.clear();
-		player.Update();
+		player.Draw();
 		wnd.display();
 	}
 };
