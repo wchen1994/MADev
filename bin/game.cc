@@ -9,16 +9,32 @@ A touhou like game
 
 class Bullet{
 private:
-	float speed;
+	sf::RenderWindow *wnd;
+	sf::CircleShape sprite;
 	float x, y;
 	float dx, dy;
 public:
-	Bullet(){
+	Bullet(sf::RenderWindow *wnd, float x, float y) :
+		sprite()
+	{
+		this->wnd = wnd;
+		this->x = x;
+		this->y = y;
+		this->dx = 0;
+		this->dy = -5;
 
+		sprite.setRadius(30);
+		sprite.setPosition(x, y);
 	}
 
 	void Update(){
+		x += dx;
+		y += dy;
+		sprite.setPosition(x, y);
+	}
 
+	void Draw(){
+		wnd->draw(sprite);
 	}
 };
 
@@ -94,10 +110,12 @@ private:
 	sf::RenderWindow wnd;
 	sf::Event event;
 	Player player;
+	Bullet bullet;
 public:
 	Game() :
 		wnd(sf::VideoMode(800,600), "GAME"),
-		player(&wnd)
+		player(&wnd),
+		bullet(&wnd, 400,600)
 	{
 		wnd.setFramerateLimit(60);
 	}
@@ -166,9 +184,11 @@ public:
 			}
 		}
 		player.Update();
+		bullet.Update();
 
 		wnd.clear();
 		player.Draw();
+		bullet.Draw();
 		wnd.display();
 	}
 };
