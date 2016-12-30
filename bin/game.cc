@@ -32,7 +32,7 @@ public:
 
 };
 
-class Bullet{
+class Bullet : public GameObject{
 private:
 	sf::RenderWindow *wnd;
 	sf::CircleShape sprite;
@@ -40,25 +40,26 @@ private:
 	float dx, dy;
 public:
 	Bullet(sf::RenderWindow *wnd, float x, float y) :
+		GameObject(wnd),
 		sprite()
 	{
 		this->wnd = wnd;
-		this->x = x;
-		this->y = y;
-		this->dx = 0;
-		this->dy = -5;
+		position.x = x;
+		position.y = y;
+		velocity.x = 0;
+		velocity.y = -5;
 
 		sprite.setRadius(30);
 		sprite.setPosition(x, y);
 	}
 
 	void Update(){
-		x += dx;
-		y += dy;
-		sprite.setPosition(x, y);
+		position += velocity;
+		Draw();
 	}
 
 	void Draw(){
+		sprite.setPosition(position);
 		wnd->draw(sprite);
 	}
 };
@@ -131,12 +132,13 @@ public:
 	}
 };
 
+std::list<GameObject*> gameObjects;
+
 class Game{
 private:
 	sf::RenderWindow wnd;
 	sf::Event event;
 	
-	std::list<GameObject*> gameObjects;
 	Player player;
 	Bullet bullet;
 public:
@@ -147,6 +149,7 @@ public:
 	{
 		wnd.setFramerateLimit(60);
 		gameObjects.push_back(&player);
+		gameObjects.push_back(&bullet);
 	}
 
 	// Trigge as the key just be pressed
@@ -216,9 +219,7 @@ public:
 			it != gameObjects.end(); it++){
 			(*it)->Update();
 		}
-		bullet.Update();
 
-		bullet.Draw();
 		wnd.display();
 	}
 };
