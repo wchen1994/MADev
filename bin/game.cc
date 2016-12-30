@@ -6,6 +6,30 @@ A touhou like game
 #include<SFML/Graphics.hpp>
 #include<iostream>
 #include<cmath>
+#include<list>
+
+class GameObject{
+protected:
+	sf::Vector2<float> position;
+	sf::Vector2<float> velocity;
+	sf::RenderWindow *wnd;
+public:
+	GameObject(sf::RenderWindow *wnd) :
+		position(0,0),
+		velocity(0,0)
+	{
+		this->wnd = wnd;
+	}
+
+	virtual void Draw(){
+	}
+	
+	virtual void Update(){
+		position += velocity;
+		Draw();
+	}
+
+};
 
 class Bullet{
 private:
@@ -38,54 +62,55 @@ public:
 	}
 };
 
-class Player{
+class Player : public GameObject{
 private:
-	sf::RenderWindow *wnd;
 	sf::CircleShape sprite;
-	float x, y;
-	float dx, dy;
 	float originX, originY;
 	float radius;
 	float speed;
 	bool up, down, left, right;
 public:
 	Player(sf::RenderWindow *wnd) :
+		GameObject(wnd),
 		sprite()
 	{
 		this->wnd = wnd;
 		radius = 5;
-		x = 400;
-		y = 300;
-		dx = dy = 0;
+		position.x = 400;
+		position.y = 300;
+		velocity.x = 0;
+		velocity.y = 0;
 		speed = 3;
 		originX = originY = radius;
 		sprite.setRadius(radius);
 		sprite.setOrigin(originX, originY);
-		sprite.setPosition(x, y);
+		sprite.setPosition(position);
 	}
 
 	void Draw(){
+		sprite.setPosition(position);
 		wnd->draw(sprite);
 	}
 
 	void Update(){
-		dx = dy = 0;
+		velocity.x = 0;
+		velocity.y = 0;
 		if (up)
-			dy -= 100;
+			velocity.y -= 100;
 		if (down)
-			dy += 100;
+			velocity.y += 100;
 		if (left)
-			dx -= 100;
+			velocity.x -= 100;
 		if (right)
-			dx += 100;
-		float sqlen =dx * dx + dy * dy;
+			velocity.x += 100;
+		float sqlen = velocity.x*velocity.x + velocity.y*velocity.y;
 		
 		if (sqlen != 0){
 			sqlen = sqrt(sqlen);
-			x += dx/sqlen * speed;
-			y += dy/sqlen * speed;
+			position += velocity/sqlen * speed;
 		}
-		sprite.setPosition(x, y);
+
+		Draw();
 	}
 
 	void SetUp(bool status){
@@ -109,6 +134,8 @@ class Game{
 private:
 	sf::RenderWindow wnd;
 	sf::Event event;
+	
+
 	Player player;
 	Bullet bullet;
 public:
