@@ -25,6 +25,7 @@ public:
 	}
 	
 	virtual void Update(){
+		std::cout << "!" << std::endl;
 		position += velocity;
 		Draw();
 	}
@@ -135,7 +136,7 @@ private:
 	sf::RenderWindow wnd;
 	sf::Event event;
 	
-
+	std::list<GameObject*> gameObjects;
 	Player player;
 	Bullet bullet;
 public:
@@ -145,6 +146,7 @@ public:
 		bullet(&wnd, 400,600)
 	{
 		wnd.setFramerateLimit(60);
+		gameObjects.push_back(&player);
 	}
 
 	// Trigge as the key just be pressed
@@ -188,9 +190,7 @@ public:
 		}
 	}
 
-	void Run(){
-		while(wnd.isOpen()){
-			Update();
+	void Run(){ while(wnd.isOpen()){ Update();
 		}
 	}
 
@@ -210,11 +210,14 @@ public:
 					break;
 			}
 		}
-		player.Update();
+		wnd.clear();
+
+		for (std::list<GameObject*>::iterator it=gameObjects.begin();
+			it != gameObjects.end(); it++){
+			(*it)->Update();
+		}
 		bullet.Update();
 
-		wnd.clear();
-		player.Draw();
 		bullet.Draw();
 		wnd.display();
 	}
