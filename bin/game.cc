@@ -7,6 +7,21 @@ A touhou like game
 #include<iostream>
 #include<cmath>
 
+class Bullet{
+private:
+	float speed;
+	float x, y;
+	float dx, dy;
+public:
+	Bullet(){
+
+	}
+
+	void Update(){
+
+	}
+};
+
 class Player{
 private:
 	sf::RenderWindow *wnd;
@@ -22,11 +37,11 @@ public:
 		sprite()
 	{
 		this->wnd = wnd;
-		radius = 50;
+		radius = 5;
 		x = 400;
 		y = 300;
 		dx = dy = 0;
-		speed = 10;
+		speed = 3;
 		originX = originY = radius;
 		sprite.setRadius(radius);
 		sprite.setOrigin(originX, originY);
@@ -54,7 +69,6 @@ public:
 			x += dx/sqlen * speed;
 			y += dy/sqlen * speed;
 		}
-		std::cout << x << ' ' << y << std::endl;
 		sprite.setPosition(x, y);
 	}
 
@@ -92,16 +106,16 @@ public:
 	void handleKeyPressed(sf::Event::KeyEvent key){
 		sf::Keyboard::Key keycode = key.code;
 		switch (keycode){
-			case sf::Keyboard::W:
+			case sf::Keyboard::Up:
 				player.SetUp(true);
 				break;
-			case sf::Keyboard::S:
+			case sf::Keyboard::Down:
 				player.SetDown(true);
 				break;
-			case sf::Keyboard::A:
+			case sf::Keyboard::Left:
 				player.SetLeft(true);
 				break;
-			case sf::Keyboard::D:
+			case sf::Keyboard::Right:
 				player.SetRight(true);
 				break;
 			default:
@@ -112,16 +126,16 @@ public:
 	void handleKeyReleased(sf::Event::KeyEvent key){
 		sf::Keyboard::Key keycode = key.code;
 		switch (keycode){
-			case sf::Keyboard::W:
+			case sf::Keyboard::Up:
 				player.SetUp(false);
 				break;
-			case sf::Keyboard::S:
+			case sf::Keyboard::Down:
 				player.SetDown(false);
 				break;
-			case sf::Keyboard::A:
+			case sf::Keyboard::Left:
 				player.SetLeft(false);
 				break;
-			case sf::Keyboard::D:
+			case sf::Keyboard::Right:
 				player.SetRight(false);
 				break;
 			default:
