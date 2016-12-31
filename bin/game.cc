@@ -7,6 +7,7 @@ A touhou like game
 #include<iostream>
 #include<cmath>
 #include<list>
+#include<cstdlib>
 
 class GameObject{
 protected:
@@ -36,12 +37,42 @@ public:
 std::list<GameObject*> gameObjects;
 std::list<GameObject*> deleteLayer;
 
+class Enemy : public GameObject{
+private:
+	sf::RenderWindow *wnd;
+	sf::CircleShape sprite;
+	float radius;
+public:
+	Enemy(sf::RenderWindow *wnd, float x) :
+		GameObject(wnd),
+		sprite()
+	{
+		this->wnd = wnd;
+		position.x = x;
+		position.y = 0;
+		velocity.x = 0;
+		velocity.y = 2;
+		radius = 10;
+		sprite.setRadius(radius);
+		sprite.setPosition(position);
+		sprite.setOrigin(radius, radius);
+	}
+
+	void Update(){
+		position += velocity;
+		Draw();
+	}
+
+	void Draw(){
+		sprite.setPosition(position);
+		wnd->draw(sprite);
+	}
+};
+
 class Bullet : public GameObject{
 private:
 	sf::RenderWindow *wnd;
 	sf::CircleShape sprite;
-	float x, y;
-	float dx, dy;
 	float radius;
 public:
 	Bullet(sf::RenderWindow *wnd, float x, float y) :
@@ -60,7 +91,7 @@ public:
 	}
 
 	void Update(){
-		if (position.y < 100){
+		if (position.y < 0){
 			deleteLayer.push_back(this);
 		} else {
 			position += velocity;
@@ -132,6 +163,14 @@ public:
 		if (sqlen != 0){
 			sqlen = sqrt(sqlen);
 			position += velocity/sqlen * speed;
+			if (position.x < 0)
+				position.x = 0;
+			if (position.x > 800)
+				position.x = 800;
+			if (position.y < 0)
+				position.y = 0;
+			if (position.y > 600)
+				position.y = 600;
 		}
 
 		Draw();
@@ -164,16 +203,14 @@ private:
 	sf::Event event;
 	
 	Player player;
-	//Bullet bullet;
+	float enemyCountdown;
 public:
 	Game() :
 		wnd(sf::VideoMode(800,600), "GAME"),
 		player(&wnd)
-		//bullet(&wnd, 400,600)
 	{
 		wnd.setFramerateLimit(60);
 		gameObjects.push_back(&player);
-		//gameObjects.push_back(&bullet);
 	}
 
 	// Trigge as the key just be pressed
@@ -244,6 +281,11 @@ public:
 			}
 		}
 		wnd.clear();
+		if (enemyCountdown < 0){
+			gameObjects.push_back(new Enemy(&wnd, rand()%800));
+			enemyCountdown = 50;
+		}
+		enemyCountdown--;
 
 		for (std::list<GameObject*>::iterator it=gameObjects.begin();
 			it != gameObjects.end(); it++){
