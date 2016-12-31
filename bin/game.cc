@@ -25,7 +25,6 @@ public:
 	}
 	
 	virtual void Update(){
-		std::cout << "!" << std::endl;
 		position += velocity;
 		Draw();
 	}
@@ -38,6 +37,7 @@ private:
 	sf::CircleShape sprite;
 	float x, y;
 	float dx, dy;
+	float radius;
 public:
 	Bullet(sf::RenderWindow *wnd, float x, float y) :
 		GameObject(wnd),
@@ -48,9 +48,10 @@ public:
 		position.y = y;
 		velocity.x = 0;
 		velocity.y = -5;
-
-		sprite.setRadius(30);
+		radius = 3;
+		sprite.setRadius(radius);
 		sprite.setPosition(x, y);
+		sprite.setOrigin(radius, radius);
 	}
 
 	void Update(){
@@ -64,6 +65,8 @@ public:
 	}
 };
 
+std::list<GameObject*> gameObjects;
+
 class Player : public GameObject{
 private:
 	sf::CircleShape sprite;
@@ -71,12 +74,15 @@ private:
 	float radius;
 	float speed;
 	bool up, down, left, right;
+	bool fire;
 public:
 	Player(sf::RenderWindow *wnd) :
 		GameObject(wnd),
 		sprite()
 	{
 		this->wnd = wnd;
+		up = down = left = right = false;
+		fire = false;
 		radius = 5;
 		position.x = 400;
 		position.y = 300;
@@ -105,6 +111,9 @@ public:
 			velocity.x -= 100;
 		if (right)
 			velocity.x += 100;
+
+		if (fire)
+			gameObjects.push_back(new Bullet(wnd, position.x, position.y));
 		float sqlen = velocity.x*velocity.x + velocity.y*velocity.y;
 		
 		if (sqlen != 0){
@@ -130,9 +139,11 @@ public:
 	void SetRight(bool status){
 		right = status;
 	}
-};
 
-std::list<GameObject*> gameObjects;
+	void SetFire(bool status){
+		fire = status;
+	}
+};
 
 class Game{
 private:
@@ -140,16 +151,16 @@ private:
 	sf::Event event;
 	
 	Player player;
-	Bullet bullet;
+	//Bullet bullet;
 public:
 	Game() :
 		wnd(sf::VideoMode(800,600), "GAME"),
-		player(&wnd),
-		bullet(&wnd, 400,600)
+		player(&wnd)
+		//bullet(&wnd, 400,600)
 	{
 		wnd.setFramerateLimit(60);
 		gameObjects.push_back(&player);
-		gameObjects.push_back(&bullet);
+		//gameObjects.push_back(&bullet);
 	}
 
 	// Trigge as the key just be pressed
@@ -167,6 +178,9 @@ public:
 				break;
 			case sf::Keyboard::Right:
 				player.SetRight(true);
+				break;
+			case sf::Keyboard::Z:
+				player.SetFire(true);
 				break;
 			default:
 				break;
@@ -187,6 +201,9 @@ public:
 				break;
 			case sf::Keyboard::Right:
 				player.SetRight(false);
+				break;
+			case sf::Keyboard::Z:
+				player.SetFire(false);
 				break;
 			default:
 				break;
