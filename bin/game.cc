@@ -21,6 +21,8 @@ public:
 		this->wnd = wnd;
 	}
 
+	~GameObject(){};
+
 	virtual void Draw(){
 	}
 	
@@ -30,6 +32,9 @@ public:
 	}
 
 };
+
+std::list<GameObject*> gameObjects;
+std::list<GameObject*> deleteLayer;
 
 class Bullet : public GameObject{
 private:
@@ -55,8 +60,12 @@ public:
 	}
 
 	void Update(){
-		position += velocity;
-		Draw();
+		if (position.y < 100){
+			deleteLayer.push_back(this);
+		} else {
+			position += velocity;
+			Draw();
+		}
 	}
 
 	void Draw(){
@@ -64,8 +73,6 @@ public:
 		wnd->draw(sprite);
 	}
 };
-
-std::list<GameObject*> gameObjects;
 
 class Player : public GameObject{
 private:
@@ -75,6 +82,7 @@ private:
 	float speed;
 	bool up, down, left, right;
 	bool fire;
+	int cooldown;
 public:
 	Player(sf::RenderWindow *wnd) :
 		GameObject(wnd),
@@ -89,6 +97,7 @@ public:
 		velocity.x = 0;
 		velocity.y = 0;
 		speed = 3;
+		cooldown = 0;
 		originX = originY = radius;
 		sprite.setRadius(radius);
 		sprite.setOrigin(originX, originY);
@@ -112,8 +121,12 @@ public:
 		if (right)
 			velocity.x += 100;
 
-		if (fire)
+		if (cooldown > 0){
+			cooldown--;
+		}else if (fire){
 			gameObjects.push_back(new Bullet(wnd, position.x, position.y));
+			cooldown = 10;
+		}
 		float sqlen = velocity.x*velocity.x + velocity.y*velocity.y;
 		
 		if (sqlen != 0){
@@ -235,6 +248,12 @@ public:
 		for (std::list<GameObject*>::iterator it=gameObjects.begin();
 			it != gameObjects.end(); it++){
 			(*it)->Update();
+		}
+
+		while(!deleteLayer.empty()){
+			gameObjects.remove(deleteLayer.front());
+			delete deleteLayer.front();
+			deleteLayer.pop_front();
 		}
 
 		wnd.display();
