@@ -9,30 +9,32 @@ A touhou like game
 #include<list>
 #include<cstdlib>
 
-class GameObject{
-protected:
-	sf::Vector2<float> position;
-	sf::Vector2<float> velocity;
-	sf::RenderWindow *wnd;
-public:
-	GameObject(sf::RenderWindow *wnd) :
-		position(0,0),
-		velocity(0,0)
-	{
-		this->wnd = wnd;
-	}
+#include "GameObject.hpp"
 
-	~GameObject(){};
-
-	virtual void Draw(){
-	}
-	
-	virtual void Update(){
-		position += velocity;
-		Draw();
-	}
-
-};
+//class GameObject{
+//protected:
+//	sf::Vector2<float> position;
+//	sf::Vector2<float> velocity;
+//	sf::RenderWindow *wnd;
+//public:
+//	GameObject(sf::RenderWindow *wnd) :
+//		position(0,0),
+//		velocity(0,0)
+//	{
+//		this->wnd = wnd;
+//	}
+//
+//	~GameObject(){};
+//
+//	virtual void Draw(){
+//	}
+//	
+//	virtual void Update(){
+//		position += velocity;
+//		Draw();
+//	}
+//
+//};
 
 std::list<GameObject*> gameObjects;
 std::list<GameObject*> deleteLayer;

@@ -14,13 +14,11 @@ SOURCES_FILE=$(notdir $(wildcard src/*.cc))
 SOURCES_PATH=$(addprefix $(SOURCES_DIR)/, $(SOURCES_FILE))
 TARGET_PATH=$(addprefix $(SOURCES_DIR)/, $(patsubst %.cc,%.o,$(SOURCES_FILE)))
 
-#tmp:
-#	echo $(SOURCES_PATH)
+all: $(TARGET_PATH) $(PROGRAM_PATH) 
 
-all:$(PROGRAM_PATH) $(TARGET_PATH)
+$(PROGRAM_PATH): CXXFLAGS+=$(TARGET_PATH)
 
 $(TARGET_PATH): $(SOURCES_PATH)
-	#echo $(SOURCES_PATH)
 	$(CC) $(CXXFLAGS) -c $(patsubst %.o,%.cc,$@) -o $@ $(LDLIBS)
 
 .PHONY:clean
