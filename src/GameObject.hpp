@@ -1,13 +1,18 @@
-#include<SFML/Graphics.hpp>
+#ifndef __GAMEOBJECT_H_
+#define __GAMEOBJECT_H_
+
+#include <SFML/Graphics.hpp>
 
 class GameObject{
 protected:
 	sf::Vector2<float> position;
-	sf::Vector2<float> velocity;
 	sf::RenderWindow *wnd;
+	sf::Drawable *drawing;
 public:
 	GameObject(sf::RenderWindow *wnd);
-	~GameObject();
+	virtual ~GameObject();
 	virtual void Draw();
 	virtual void Update();
 };
+
+#endif
