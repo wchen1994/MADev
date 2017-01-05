@@ -10,15 +10,12 @@
 class Game{
 private:
 	sf::Event event;
-
-public:
 	static sf::RenderWindow wnd;
-	static int wndHeight;
-	static int wndWidth;
-	static std::string wndName;
 	static std::list<GameObject*> layerDefault;
 	static std::list<GameObject*> layerDelete;
+	static std::list<GameObject*> layerKey;
 
+public:
 	Game();
 	void Run();
 	void Update();

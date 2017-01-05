@@ -13,6 +13,8 @@ public:
 	virtual ~GameObject();
 	virtual void Draw();
 	virtual void Update();
+	virtual void OnKeyPressed(sf::Event::KeyEvent key);
+	virtual void OnKeyReleased(sf::Event::KeyEvent key);
 };
 
 #endif

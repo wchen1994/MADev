@@ -1,11 +1,6 @@
 #include "Game.hpp"
 
-int Game::wndWidth = 800;
-int Game::wndHeight = 600;
-std::string Game::wndName = "Game";
-sf::RenderWindow Game::wnd(
-	sf::VideoMode(Game::wndWidth, Game::wndHeight), 
-	Game::wndName);
+sf::RenderWindow Game::wnd(sf::VideoMode(800, 600), "Game");
 std::list<GameObject*> Game::layerDefault;
 std::list<GameObject*> Game::layerDelete;
 
@@ -23,6 +18,18 @@ void Game::Run(){
 void Game::Update(){
 	while(wnd.pollEvent(event)){
 		switch (event.type){
+			case sf::Event::KeyPressed:
+				for (std::list<GameObject*>::iterator it=layerDefault.begin();
+				it != layerDefault.end(); it++){
+					(*it)->OnKeyPressed(event.key);
+				}
+				break;
+			case sf::Event::KeyReleased:
+				for (std::list<GameObject*>::iterator it=layerDefault.begin();
+				it != layerDefault.end(); it++){
+					(*it)->OnKeyReleased(event.key);
+				}
+				break;
 			case sf::Event::Closed:
 				wnd.close();
 				break;
@@ -36,6 +43,11 @@ void Game::Update(){
 	for (std::list<GameObject*>::iterator it=layerDefault.begin();
 		it != layerDefault.end(); it++){
 		(*it)->Update();
+	}
+
+	for (std::list<GameObject*>::iterator it=layerDefault.begin();
+		it != layerDefault.end(); it++){
+		(*it)->Draw();
 	}
 
 	while(!layerDelete.empty()){

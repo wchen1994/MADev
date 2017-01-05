@@ -8,9 +8,9 @@ GameObject::GameObject(sf::RenderWindow *wnd) :
 }
 
 GameObject::~GameObject(){
-	if (drawing){
-		delete drawing;
-	}
+//	if (drawing){ // drawing should be class member can not delete
+//		delete drawing;
+//	}
 };
 
 void GameObject::Draw(){
@@ -20,5 +20,10 @@ void GameObject::Draw(){
 }
 
 void GameObject::Update(){
-	Draw();
+}
+
+void GameObject::OnKeyPressed(sf::Event::KeyEvent key){
+}
+
+void GameObject::OnKeyReleased(sf::Event::KeyEvent key){
 }
