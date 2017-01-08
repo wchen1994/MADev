@@ -1,5 +1,9 @@
 #include "Player.hpp"
 
+int add(int x, int y){
+	return x + y;
+}
+
 Player::Player(sf::RenderWindow *wnd) :
 	GameObject(wnd),
 	sprite()

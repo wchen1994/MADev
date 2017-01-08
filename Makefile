@@ -21,13 +21,13 @@ TARGET_SO_PATH=$(addprefix $(LIBRARY_DIR)/, $(patsubst %.cc,%.so,$(LIBRARY_FILE)
 
 all: $(TARGET_PATH) $(TARGET_SO_PATH) $(PROGRAM_PATH) 
 
-$(PROGRAM_PATH): CXXFLAGS+=$(TARGET_PATH)
+$(PROGRAM_PATH): CXXFLAGS+= -Llib -lResources $(TARGET_PATH) lib/libResources.so
 
 $(TARGET_PATH): $(SOURCES_PATH)
 	$(CC) $(CXXFLAGS) -c $(patsubst %.o,%.cc,$@) -o $@ $(LDLIBS)
 
 $(TARGET_SO_PATH): $(LIBRARY_PATH)
-	$(CC) $(CXXFLAGS) -fPIC -shared $(patsubst %.so,%.cc,$@) -o $@ $(LDLIBS)
+	$(CC) $(CXXFLAGS) -fPIC -shared $(patsubst %.so,%.cc,$@) -o lib/libResources.so $(LDLIBS)
 
 .PHONY:clean
 clean:

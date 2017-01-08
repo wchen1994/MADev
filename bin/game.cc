@@ -2,12 +2,13 @@
 A touhou like game
 */
 
-#include<SFML/Audio.hpp>
-#include<SFML/Graphics.hpp>
-#include<iostream>
-#include<cmath>
-#include<list>
-#include<cstdlib>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <cmath>
+#include <list>
+#include <cstdlib>
+//#include <dlfcn.h>
 
 #include "GameObject.hpp"
 #include "Game.hpp"
@@ -280,7 +281,13 @@ A touhou like game
 //	}
 //};
 
+int add(int x, int y);
+
 int main(){
+//	void *lib_handle;
+//	lib_handle = dlopen("lib/libResources.so", RTLD_LAZY);
+	std::cout << add(5,4) << std::endl;
+
 	Game game;
 	game.Run();
 
