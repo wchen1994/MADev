@@ -4,13 +4,13 @@ A touhou like game
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <iostream>
+#include <iostream> 
 #include <cmath>
 #include <list>
 #include <cstdlib>
-//#include <dlfcn.h>
 
 #include "GameObject.hpp"
+#include "Player.hpp"
 #include "Game.hpp"
 
 //std::list<GameObject*> gameObjects;
@@ -40,42 +40,6 @@ A touhou like game
 //	void Update(){
 //		position += velocity;
 //		Draw();
-//	}
-//
-//	void Draw(){
-//		sprite.setPosition(position);
-//		wnd->draw(sprite);
-//	}
-//};
-//
-//class Bullet : public GameObject{
-//private:
-//	sf::RenderWindow *wnd;
-//	sf::CircleShape sprite;
-//	float radius;
-//public:
-//	Bullet(sf::RenderWindow *wnd, float x, float y) :
-//		GameObject(wnd),
-//		sprite()
-//	{
-//		this->wnd = wnd;
-//		position.x = x;
-//		position.y = y;
-//		velocity.x = 0;
-//		velocity.y = -5;
-//		radius = 3;
-//		sprite.setRadius(radius);
-//		sprite.setPosition(x, y);
-//		sprite.setOrigin(radius, radius);
-//	}
-//
-//	void Update(){
-//		if (position.y < 0){
-//			deleteLayer.push_back(this);
-//		} else {
-//			position += velocity;
-//			Draw();
-//		}
 //	}
 //
 //	void Draw(){
@@ -281,13 +245,7 @@ A touhou like game
 //	}
 //};
 
-int add(int x, int y);
-
 int main(){
-//	void *lib_handle;
-//	lib_handle = dlopen("lib/libResources.so", RTLD_LAZY);
-	std::cout << add(5,4) << std::endl;
-
 	Game game;
 	game.Run();
 

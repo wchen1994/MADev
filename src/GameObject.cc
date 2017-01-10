@@ -1,5 +1,8 @@
 #include"GameObject.hpp"
 
+std::list<GameObject*> GameObject::layerDefault;
+std::list<GameObject*> GameObject::layerDelete;
+
 GameObject::GameObject(sf::RenderWindow *wnd) :
 	position(0,0)
 {
@@ -8,9 +11,6 @@ GameObject::GameObject(sf::RenderWindow *wnd) :
 }
 
 GameObject::~GameObject(){
-//	if (drawing){ // drawing should be class member can not delete
-//		delete drawing;
-//	}
 };
 
 void GameObject::Draw(){

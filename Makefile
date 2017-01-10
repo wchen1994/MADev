@@ -19,9 +19,9 @@ LIBRARY_FILE=$(notdir $(wildcard lib/*.cc))
 LIBRARY_PATH=$(addprefix $(LIBRARY_DIR)/, $(LIBRARY_FILE))
 TARGET_SO_PATH=$(addprefix $(LIBRARY_DIR)/, $(patsubst %.cc,%.so,$(LIBRARY_FILE)))
 
-all: $(TARGET_PATH) $(TARGET_SO_PATH) $(PROGRAM_PATH) 
+all: $(PROGRAM_PATH) 
 
-$(PROGRAM_PATH): CXXFLAGS+= -Llib -lResources $(TARGET_PATH) lib/libResources.so
+$(PROGRAM_PATH): $(TARGET_PATH)
 
 $(TARGET_PATH): $(SOURCES_PATH)
 	$(CC) $(CXXFLAGS) -c $(patsubst %.o,%.cc,$@) -o $@ $(LDLIBS)

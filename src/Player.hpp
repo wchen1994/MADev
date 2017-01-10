@@ -19,7 +19,3 @@ public:
 	void OnKeyPressed(sf::Event::KeyEvent key);
 	void OnKeyReleased(sf::Event::KeyEvent key);
 };
-
-//int add(int x, int y){
-//	return x + y;
-//}

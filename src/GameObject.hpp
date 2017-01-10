@@ -2,6 +2,8 @@
 #define __GAMEOBJECT_H_
 
 #include <SFML/Graphics.hpp>
+#include <list>
+#include <iostream>
 
 class GameObject{
 protected:
@@ -15,6 +17,9 @@ public:
 	virtual void Update();
 	virtual void OnKeyPressed(sf::Event::KeyEvent key);
 	virtual void OnKeyReleased(sf::Event::KeyEvent key);
+	static std::list<GameObject*> layerDefault;
+	static std::list<GameObject*> layerDelete;
 };
+
 
 #endif
