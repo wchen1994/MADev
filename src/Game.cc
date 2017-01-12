@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "Player.hpp"
 #include "Bullet.hpp"
+#include "Enemy.hpp"
 
 sf::RenderWindow Game::wnd(sf::VideoMode(800, 600), "Game");
 
@@ -42,6 +43,8 @@ void Game::Update(){
 	}
 
 	wnd.clear();
+
+	GameObject::layerDefault.push_back(new Enemy(&wnd, 50, 50));
 
 	for (std::list<GameObject*>::iterator it=GameObject::layerDefault.begin();
 		it != GameObject::layerDefault.end(); it++){
