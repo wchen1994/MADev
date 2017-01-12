@@ -27,3 +27,6 @@ void GameObject::OnKeyPressed(sf::Event::KeyEvent key){
 
 void GameObject::OnKeyReleased(sf::Event::KeyEvent key){
 }
+
+void GameObject::OnCollisionEnter(GameObject *other){
+}

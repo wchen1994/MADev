@@ -17,6 +17,7 @@ public:
 	virtual void Update();
 	virtual void OnKeyPressed(sf::Event::KeyEvent key);
 	virtual void OnKeyReleased(sf::Event::KeyEvent key);
+	virtual void OnCollisionEnter(GameObject *other);
 	static std::list<GameObject*> layerDefault;
 	static std::list<GameObject*> layerDelete;
 };
