@@ -1,4 +1,5 @@
 #include "Enemy.hpp"
+#include <cmath>
 
 Enemy::Enemy(sf::RenderWindow *wnd, float x, float y=0) :
 	GameObject(wnd),
@@ -9,7 +10,26 @@ Enemy::Enemy(sf::RenderWindow *wnd, float x, float y=0) :
 	position.y = y;
 	velocity.x = 0;
 	velocity.y = 2;
-	radius = 10;
+	colliderSize = radius = 10;
+	sprite.setRadius(radius);
+	sprite.setPosition(position);
+	sprite.setOrigin(radius, radius);
+	drawing = &sprite;
+}
+
+Enemy::Enemy(sf::RenderWindow *wnd, float x, float y, float vx, float vy) :
+	GameObject(wnd),
+	sprite()
+{
+	this->wnd = wnd;
+	position.x = x;
+	position.y = y;
+	if (vy <= 0)
+		vy = 1;
+	float len = sqrt(vx*vx + vy*vy);
+	velocity.x = vx * 2 / len;
+	velocity.y = vy * 2 / len;
+	colliderSize = radius = 10;
 	sprite.setRadius(radius);
 	sprite.setPosition(position);
 	sprite.setOrigin(radius, radius);
@@ -24,4 +44,10 @@ void Enemy::Update(){
 	}
 
 	sprite.setPosition(position);
+}
+
+void Enemy::OnCollisionEnter(GameObject *other){
+	if (other->GetType() == "bullet"){
+		GameObject::layerDelete.push_back(this);	
+	}
 }

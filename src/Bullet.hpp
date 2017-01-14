@@ -2,6 +2,7 @@
 #define __HULLET_H_
 
 #include "GameObject.hpp"
+#include <string>
 
 class Bullet : public GameObject{
 private:
@@ -12,6 +13,7 @@ private:
 public:
 	Bullet(sf::RenderWindow *wnd, float x, float y);
 	void Update();
+	std::string GetType(){ return "bullet"; }
 };
 
 #endif

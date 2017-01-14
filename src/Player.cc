@@ -5,7 +5,6 @@ Player::Player(sf::RenderWindow *wnd) :
 	GameObject(wnd),
 	sprite()
 {
-	std::cout << &layerDefault << std::endl;
 	this->wnd = wnd;
 	up = down = left = right = false;
 	fire = false;

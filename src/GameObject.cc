@@ -7,6 +7,7 @@ GameObject::GameObject(sf::RenderWindow *wnd) :
 	position(0,0)
 {
 	this->wnd = wnd;
+	colliderSize = 0;
 	drawing = NULL;
 }
 
@@ -30,3 +31,4 @@ void GameObject::OnKeyReleased(sf::Event::KeyEvent key){
 
 void GameObject::OnCollisionEnter(GameObject *other){
 }
+

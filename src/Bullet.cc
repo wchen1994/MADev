@@ -9,7 +9,7 @@ Bullet::Bullet(sf::RenderWindow *wnd, float x, float y) :
 	position.y = y;
 	velocity.x = 0;
 	velocity.y = -5;
-	radius = 3;
+	colliderSize = radius = 3;
 	sprite.setRadius(radius);
 	sprite.setPosition(x, y);
 	sprite.setOrigin(radius, radius);

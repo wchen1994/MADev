@@ -14,7 +14,6 @@ private:
 
 public:
 	Board(int wndWidth, int wndHeight, int gridsize);
-	~Board();
 	int getGridSize(){ return gridsize; }
 	void setGridSize(int size){ gridsize = size; }
 
@@ -23,5 +22,7 @@ public:
 	void processCollision();
 	void clear();
 };
+
+static Board board(800, 600, 50);
 
 #endif

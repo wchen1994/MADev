@@ -18,4 +18,5 @@ public:
 	void Update();
 	void OnKeyPressed(sf::Event::KeyEvent key);
 	void OnKeyReleased(sf::Event::KeyEvent key);
+	std::string GetType(){ return "player"; }
 };
