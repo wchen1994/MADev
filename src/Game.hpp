@@ -7,15 +7,16 @@
 
 #include "GameObject.hpp"
 #include "Scene.hpp"
+#include "Essential.hpp"
 
 class Game : public Scene{
 private:
 	sf::Event event;
-	static sf::RenderWindow wnd;
+	sf::RenderWindow *wnd;
 
 public:
-	Game();
-	void Run();
+	Game(sf::RenderWindow *wnd);
+	Essential::GameState Run();
 	void Update();
 };
 

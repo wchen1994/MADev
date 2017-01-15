@@ -6,28 +6,27 @@
 #include "Player.hpp" 
 #include "Enemy.hpp"
 
-sf::RenderWindow Game::wnd(sf::VideoMode(800, 600), "Game");
-
-Game::Game() :
+Game::Game(sf::RenderWindow *wnd) :
 	Scene()
 {
-	wnd.setFramerateLimit(60);
+	this->wnd = wnd;
+	wnd->setFramerateLimit(60);
 }
 
-void Game::Run(){ 
-	GameObject::layerDefault.insert(new Player(&wnd));
+Essential::GameState Game::Run(){ 
+	GameObject::layerDefault.insert(new Player(wnd));
 
-	while(wnd.isOpen()){ 
+	while(wnd->isOpen()){ 
 		Update();
 		if (Essential::isGameOver){
-			return;
+			return Essential::POP;
 		}
 	}
 }
 
 void Game::Update(){
 	//Event Handle
-	while(wnd.pollEvent(event)){
+	while(wnd->pollEvent(event)){
 		switch (event.type){
 			case sf::Event::KeyPressed:
 				for (std::set<GameObject*>::iterator it=GameObject::layerDefault.begin();
@@ -42,7 +41,7 @@ void Game::Update(){
 				}
 				break;
 			case sf::Event::Closed:
-				wnd.close();
+				wnd->close();
 				break;
 			default:
 				break;
@@ -50,10 +49,10 @@ void Game::Update(){
 	}
 
 	//Enemy create
-	GameObject::layerDefault.insert(new Enemy(&wnd, rand()%800, 0,
+	GameObject::layerDefault.insert(new Enemy(wnd, rand()%800, 0,
 											rand()%100-50, rand()%50));
 
-	wnd.clear();
+	wnd->clear();
 
 	//Update
 	for (std::set<GameObject*>::iterator it=GameObject::layerDefault.begin();
@@ -90,7 +89,7 @@ void Game::Update(){
 		GameObject::layerDelete.erase(pDelete);
 	}
 
-	wnd.display();
+	wnd->display();
 
 	//Debug
 	#ifdef DEBUG

@@ -8,17 +8,35 @@ A touhou like game
 #include <list>
 #include <cstdlib>
 
+#include "Essential.hpp"
 #include "Scene.hpp"
 #include "GameObject.hpp"
 #include "Player.hpp"
 #include "Game.hpp"
+#include "StartMenu.hpp"
 
 int main(){
 	Scene *pScene;
-	Game game;
-	pScene = &game;
-	pScene->Run();
-//	game.Run();
+	std::list<Scene*> lScenes;
+
+	Essential::GameState gameState = Essential::MENU;
+	lScenes.push_back(new StartMenu(&Essential::wnd));
+
+	while(!lScenes.empty()){
+		gameState = (lScenes.back())->Run();
+		switch (gameState){
+			case Essential::POP:
+				pScene = lScenes.back();
+				delete pScene;
+				lScenes.pop_back();
+				break;
+			case Essential::GAME:
+				lScenes.push_back(new Game(&Essential::wnd));
+				break;
+			default:
+				break;
+		}
+	}
 
 	return 0;
 }
