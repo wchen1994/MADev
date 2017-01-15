@@ -15,6 +15,7 @@ public:
 	Enemy(sf::RenderWindow *wnd, float x, float y, float vx, float vy);
 	void Update();
 	void OnCollisionEnter(GameObject *other);
+	std::string GetType(){ return "enemy"; }
 };
 
 #endif

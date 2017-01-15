@@ -14,6 +14,7 @@ public:
 	Bullet(sf::RenderWindow *wnd, float x, float y);
 	void Update();
 	std::string GetType(){ return "bullet"; }
+	void OnCollisionEnter(GameObject *other);
 };
 
 #endif

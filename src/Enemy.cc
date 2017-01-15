@@ -40,14 +40,15 @@ void Enemy::Update(){
 	position += velocity;
 
 	if (position.x < 0 || position.x > 800 || position.y > 600){
-		GameObject::layerDelete.push_back(this);	
+		GameObject::layerDelete.insert(this);	
 	}
 
 	sprite.setPosition(position);
 }
 
 void Enemy::OnCollisionEnter(GameObject *other){
-	if (other->GetType() == "bullet"){
-		GameObject::layerDelete.push_back(this);	
+	std::string type = other->GetType();
+	if (type == "bullet"){
+		GameObject::layerDelete.insert(this);
 	}
 }

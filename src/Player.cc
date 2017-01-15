@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "Bullet.hpp"
+#include "Essential.hpp"
 
 Player::Player(sf::RenderWindow *wnd) :
 	GameObject(wnd),
@@ -7,8 +8,7 @@ Player::Player(sf::RenderWindow *wnd) :
 {
 	this->wnd = wnd;
 	up = down = left = right = false;
-	fire = false;
-	radius = 5;
+	fire = false; radius = 5;
 	position.x = 400;
 	position.y = 300;
 	velocity.x = 0;
@@ -37,7 +37,7 @@ void Player::Update(){
 	if (cooldown > 0){
 		cooldown--;
 	}else if (fire){
-		layerDefault.push_back(new Bullet(wnd, position.x, position.y));
+		layerDefault.insert(new Bullet(wnd, position.x, position.y));
 		cooldown = 10;
 	}
 	float sqlen = velocity.x*velocity.x + velocity.y*velocity.y;
@@ -103,4 +103,11 @@ void Player::OnKeyReleased(sf::Event::KeyEvent key){
 			break;
 	}
 
+}
+
+void Player::OnCollisionEnter(GameObject *other){
+	if (other->GetType() == "enemy"){
+		GameObject::layerDelete.insert(this);
+		Essential::isGameOver = true;
+	}
 }

@@ -8,13 +8,17 @@ A touhou like game
 #include <list>
 #include <cstdlib>
 
+#include "Scene.hpp"
 #include "GameObject.hpp"
 #include "Player.hpp"
 #include "Game.hpp"
 
 int main(){
+	Scene *pScene;
 	Game game;
-	game.Run();
+	pScene = &game;
+	pScene->Run();
+//	game.Run();
 
 	return 0;
 }

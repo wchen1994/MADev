@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <list>
+#include <set>
 #include <iostream>
 #include <string>
 
@@ -23,8 +24,8 @@ public:
 	virtual void OnKeyReleased(sf::Event::KeyEvent key);
 	virtual void OnCollisionEnter(GameObject *other);
 	virtual std::string GetType() { return ""; }
-	static std::list<GameObject*> layerDefault;
-	static std::list<GameObject*> layerDelete;
+	static std::set<GameObject*> layerDefault;
+	static std::set<GameObject*> layerDelete;
 };
 
 

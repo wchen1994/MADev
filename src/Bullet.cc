@@ -18,10 +18,16 @@ Bullet::Bullet(sf::RenderWindow *wnd, float x, float y) :
 
 void Bullet::Update(){
 	if (position.y < 0){
-		layerDelete.push_back(this);
+		layerDelete.insert(this);
 	} else {
 		position += velocity;
 		Draw();
 	}
 	sprite.setPosition(position);
+}
+
+void Bullet::OnCollisionEnter(GameObject *other){
+	if (other->GetType() == "enemy"){
+		layerDelete.insert(this);
+	}
 }

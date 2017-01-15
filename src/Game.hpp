@@ -6,8 +6,9 @@
 #include <iostream>
 
 #include "GameObject.hpp"
+#include "Scene.hpp"
 
-class Game{
+class Game : public Scene{
 private:
 	sf::Event event;
 	static sf::RenderWindow wnd;

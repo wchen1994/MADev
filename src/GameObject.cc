@@ -1,7 +1,7 @@
 #include"GameObject.hpp"
 
-std::list<GameObject*> GameObject::layerDefault;
-std::list<GameObject*> GameObject::layerDelete;
+std::set<GameObject*> GameObject::layerDefault;
+std::set<GameObject*> GameObject::layerDelete;
 
 GameObject::GameObject(sf::RenderWindow *wnd) :
 	position(0,0)
