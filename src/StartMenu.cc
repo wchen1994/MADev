@@ -9,8 +9,10 @@ Essential::GameState StartMenu::Run(){
 	while(wnd->isOpen()){
 		while(wnd->pollEvent(event)){
 			if (event.type == sf::Event::KeyPressed){
-				Essential::isGameOver = false;
-				return Essential::GAME;
+				if (event.key.code == sf::Keyboard::Return){
+					Essential::isGameOver = false;
+					return Essential::GAME;
+				}
 			}
 			if (event.type == sf::Event::Closed){
 				wnd->close();

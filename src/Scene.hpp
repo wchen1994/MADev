@@ -5,7 +5,8 @@
 
 class Scene{
 public:
-	Scene(){}
+	Scene();
+	virtual ~Scene();
 	virtual Essential::GameState Run() = 0;
 };
 

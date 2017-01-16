@@ -1,5 +1,6 @@
 CXXFLAGS=-Wall -g -Isrc
-CC=g++
+#CC=g++
+CC=i686-w64-mingw32-g++ -static-libgcc -static-libstdc++ -I/opt/SFML-2.4.1/include -L/opt/SFML-2.4.1/lib
 
 LDLIBS+=$(LIBS_SFML)
 LIBS_SFML=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
@@ -22,6 +23,8 @@ TARGET_SO_PATH=$(addprefix $(LIBRARY_DIR)/, $(patsubst %.cc,%.so,$(LIBRARY_FILE)
 all: $(PROGRAM_PATH) 
 
 $(PROGRAM_PATH): $(TARGET_PATH)
+$(PROGRAM_PATH):
+	$(CC) $(CXXFLAGS) $(patsubst %,%.cc,$@) $(TARGET_PATH) -o $@ $(LDLIBS)
 
 $(TARGET_PATH): $(SOURCES_PATH)
 	$(CC) $(CXXFLAGS) -c $(patsubst %.o,%.cc,$@) -o $@ $(LDLIBS)

@@ -13,6 +13,18 @@ Game::Game(sf::RenderWindow *wnd) :
 	wnd->setFramerateLimit(60);
 }
 
+Game::~Game(){
+	for (std::set<GameObject*>::iterator it=GameObject::layerDefault.begin(); it!=GameObject::layerDefault.end(); it++){
+		delete *it;
+	}
+	GameObject::layerDefault.clear();
+	
+	for (std::set<GameObject*>::iterator it=GameObject::layerDelete.begin(); it!=GameObject::layerDelete.end(); it++){
+		delete *it;
+	}
+	GameObject::layerDelete.clear();
+}
+
 Essential::GameState Game::Run(){ 
 	GameObject::layerDefault.insert(new Player(wnd));
 
@@ -22,6 +34,7 @@ Essential::GameState Game::Run(){
 			return Essential::POP;
 		}
 	}
+	return Essential::POP;
 }
 
 void Game::Update(){

@@ -10,8 +10,6 @@ A touhou like game
 
 #include "Essential.hpp"
 #include "Scene.hpp"
-#include "GameObject.hpp"
-#include "Player.hpp"
 #include "Game.hpp"
 #include "StartMenu.hpp"
 

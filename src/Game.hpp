@@ -16,6 +16,7 @@ private:
 
 public:
 	Game(sf::RenderWindow *wnd);
+	~Game();
 	Essential::GameState Run();
 	void Update();
 };
