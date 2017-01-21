@@ -23,6 +23,7 @@ ifeq ($(UNAME), Linux)
 
 ifeq ($(wildcard build/$@.exe), )
 	make clean
+	make $(TARGET)
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
 else
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
@@ -34,6 +35,7 @@ ifeq ($(wildcard build/$@.exe), )
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@.exe
 else
 	make clean
+	make $(TARGET)
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@.exe
 endif
 
@@ -44,5 +46,6 @@ os:
 
 .PHONY:clean
 clean:
+	rm -rf $(PROGRAM).exe
 	rm -rf $(TARGET)
 	rm -rf $(PROGRAM)
