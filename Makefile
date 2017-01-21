@@ -7,8 +7,7 @@ CXX=g++
 else
 CXX=i686-w64-mingw32-g++
 CXXFLAGS+= -static-libgcc -static-libstdc++ -I/opt/SFML-2.4.1/include -L/opt/SFML-2.4.1/lib
-endif
-
+endif 
 LIBS_SFML=-lsfml-graphics -lsfml-window -lsfml-system
 LDLIBS+=$(LIBS_SFML)
 
@@ -21,7 +20,7 @@ all: $(PROGRAM)
 $(PROGRAM):$(TARGET)
 ifeq ($(UNAME), Linux)
 
-ifeq ($(wildcard build/$@.exe), )
+ifeq ($(wildcard $@.exe), '')
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
 else
 	make clean
@@ -31,7 +30,7 @@ endif
 
 else
 
-ifeq ($(wildcard build/$@.exe), )
+ifeq ($(wildcard $@.exe), '')
 	make clean
 	make $(TARGET)
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@.exe
