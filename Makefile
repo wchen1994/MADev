@@ -20,9 +20,23 @@ all: $(PROGRAM)
 
 $(PROGRAM):$(TARGET)
 ifeq ($(UNAME), Linux)
+
+ifeq ($(wildcard build/$@.exe), )
+	make clean
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
 else
+	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
+endif
+
+else
+
+ifeq ($(wildcard build/$@.exe), )
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@.exe
+else
+	make clean
+	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@.exe
+endif
+
 endif
 
 os:
