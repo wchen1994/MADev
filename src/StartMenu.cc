@@ -8,14 +8,15 @@ StartMenu::StartMenu(sf::RenderWindow *wnd){
 Essential::GameState StartMenu::Run(){
 	while(wnd->isOpen()){
 		while(wnd->pollEvent(event)){
-			if (event.type == sf::Event::KeyPressed){
-				if (event.key.code == sf::Keyboard::Return){
-					Essential::isGameOver = false;
-					return Essential::GAME;
-				}
-			}
-			if (event.type == sf::Event::Closed){
-				wnd->close();
+			switch(event.type){
+				case sf::Event::KeyPressed:
+					if (event.key.code == sf::Keyboard::Return){
+						Essential::isGameOver = false;
+						return Essential::GAME;
+					}
+					break;
+				default:
+					Essential::defHandleMsg(event);
 			}
 		}
 		wnd->clear(sf::Color(255,255,255));

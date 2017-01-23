@@ -2,6 +2,7 @@
 #define __ESSENTIAL_H_
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 class Essential{
 public:
@@ -10,6 +11,7 @@ public:
 	enum GameState{MENU, GAME, POP};
 	static GameState gameState;
 	static sf::RenderWindow wnd;
+	static void defHandleMsg(const sf::Event &eventType);
 };
 
 #endif

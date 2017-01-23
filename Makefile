@@ -2,7 +2,8 @@ UNAME := $(shell uname)
 
 CXXFLAGS=-Wall -g -Isrc
 
-SOURCES=$(wildcard src/*.hpp)
+HEADERS=$(wildcard src/*.hpp)
+SOURCES=$(wildcard src/*.cc)
 PROGRAM_NAME=game
 
 ifeq ($(UNAME), Linux)
@@ -17,14 +18,14 @@ LIBS_SFML=-lsfml-graphics -lsfml-window -lsfml-system
 LDLIBS+=$(LIBS_SFML)
 
 PROGRAM=$(addprefix $(BUILD_PATH)/bin/, $(PROGRAM_NAME))
-TARGET=$(addprefix $(BUILD_PATH)/, $(patsubst %.hpp,%.o,$(SOURCES)))
+TARGET=$(addprefix $(BUILD_PATH)/, $(patsubst %.hpp,%.o,$(HEADERS)))
 
 all: $(PROGRAM)
 
 $(PROGRAM):$(TARGET)
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
 	
-$(TARGET):$(SOURCE)
+$(TARGET):$(SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -c src/$(patsubst %.o,%.cc,$(notdir $@)) -o $(BUILD_PATH)/src/$(notdir $@)
 
 os:

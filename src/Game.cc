@@ -53,11 +53,8 @@ void Game::Update(){
 					(*it)->OnKeyReleased(event.key);
 				}
 				break;
-			case sf::Event::Closed:
-				wnd->close();
-				break;
 			default:
-				break;
+				Essential::defHandleMsg(event);
 		}
 	}
 
