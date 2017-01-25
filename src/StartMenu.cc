@@ -3,6 +3,9 @@
 
 StartMenu::StartMenu(sf::RenderWindow *wnd){
 	this->wnd = wnd;
+	font.loadFromFile("res/Symbola_hint.ttf");
+	text.setString("Pressed Enter to Continue");
+	text.setFont(font);
 }
 
 Essential::GameState StartMenu::Run(){
@@ -19,7 +22,8 @@ Essential::GameState StartMenu::Run(){
 					Essential::defHandleMsg(event);
 			}
 		}
-		wnd->clear(sf::Color(255,255,255));
+		wnd->clear(sf::Color(100,255,255));
+		wnd->draw(text);
 		wnd->display();
 	}
 	return Essential::POP;

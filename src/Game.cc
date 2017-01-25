@@ -7,10 +7,12 @@
 #include "Enemy.hpp"
 
 Game::Game(sf::RenderWindow *wnd) :
-	Scene()
+	Scene(),
+	view(sf::Rect<float>(0.0f, 0.0f, 800.0f, 600.0f))
 {
 	this->wnd = wnd;
 	wnd->setFramerateLimit(60);
+	view.setViewport(sf::Rect<float>(0.0f, 0.0f, 1.0f, 1.0f));
 }
 
 Game::~Game(){
@@ -63,6 +65,8 @@ void Game::Update(){
 											rand()%100-50, rand()%50));
 
 	wnd->clear();
+
+	wnd->setView(view);
 
 	//Update
 	for (std::set<GameObject*>::iterator it=GameObject::layerDefault.begin();

@@ -13,7 +13,7 @@ class Game : public Scene{
 private:
 	sf::Event event;
 	sf::RenderWindow *wnd;
-
+	sf::View view;
 public:
 	Game(sf::RenderWindow *wnd);
 	~Game();
