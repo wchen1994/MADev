@@ -1,6 +1,6 @@
 UNAME := $(shell uname)
 
-CXXFLAGS=-Wall -g -Isrc
+CXXFLAGS=-Wall -g -Isrc -DDEBUG
 
 HEADERS=$(wildcard src/*.hpp)
 SOURCES=$(wildcard src/*.cc)

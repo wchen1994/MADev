@@ -11,7 +11,7 @@ void Essential::defHandleMsg(const sf::Event &event){
 			Essential::wnd.close();
 			break;
 		case sf::Event::Resized:
-			Essential::wnd.setSize(sf::Vector2<uint>(event.size.width, event.size.height));
+//Essential::wnd.setSize(sf::Vector2<uint>(event.size.width, event.size.height));
 			break;
 		default:
 			break;
