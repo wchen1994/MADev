@@ -4,6 +4,7 @@ CXXFLAGS=-Wall -g -Isrc -DDEBUG
 
 HEADERS=$(wildcard src/*.hpp)
 SOURCES=$(wildcard src/*.cc)
+CSOURCES=$(wildcard src/*.c)
 PROGRAM_NAME=game
 
 ifeq ($(UNAME), Linux)
@@ -21,6 +22,7 @@ PROGRAM=$(addprefix $(BUILD_PATH)/bin/, $(PROGRAM_NAME))
 TARGET=$(addprefix $(BUILD_PATH)/, $(patsubst %.hpp,%.o,$(HEADERS)))
 
 all: $(PROGRAM)
+	gcc -Wall -g -DMYDEBUG $(CSOURCES) -o bin/a.out
 
 $(PROGRAM):$(TARGET)
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@

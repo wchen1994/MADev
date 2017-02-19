@@ -1,0 +1,5 @@
+Help File:
+-[c]reate <filename>
+-[s]et <filename> <param> <number>
+-[d]elete <filename> [param]
+-[u]pdate <filename> [param] [+/-]<number>
