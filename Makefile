@@ -22,7 +22,8 @@ PROGRAM=$(addprefix $(BUILD_PATH)/bin/, $(PROGRAM_NAME))
 TARGET=$(addprefix $(BUILD_PATH)/, $(patsubst %.hpp,%.o,$(HEADERS)))
 
 all: $(PROGRAM)
-	gcc -Wall -g -DMYDEBUG $(CSOURCES) -o bin/a.out
+	gcc -Wall -g -DMYDEBUG src/Cost.c -o bin/cost
+	gcc -Wall -g -DMYDEBUG src/MemRead.c -o bin/memread
 
 $(PROGRAM):$(TARGET)
 	$(CXX) $(CXXFLAGS) $(notdir $@)/$(patsubst %,%.cc,$(notdir $@)) $(TARGET) $(LDLIBS) -o $@
