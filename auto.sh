@@ -1,2 +1,2 @@
 #!/bin/sh
-echo "15848\n0\n10240" | ./bin/memread
+echo "18883\n0\n0" | ./bin/memread

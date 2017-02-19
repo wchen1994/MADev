@@ -7,7 +7,9 @@
 #include <sys/wait.h>
 #include <sys/ptrace.h>
 
-#define debug(M, ...) if(!(M)){printf("[DEBUG]" __VA_ARGS__);printf("\n");}
+#include <errno.h>
+
+#define debug(M, ...) if(!(M) || 1){printf("[DEBUG] err:%d ", errno); printf(__VA_ARGS__);printf("\n");}
 
 int main(){
 	char fname[64];
@@ -32,9 +34,11 @@ int main(){
 	int size;
 	printf("Input the size of memeory to be read\n");
 	scanf("%d", &size);
+
 	if (size > 0){
 		char *value = malloc(size);
 		pread(fd, value, size, addr);
+		debug(rc > 0, "pread return %ld", addr);
 		//pwrite(fd, value, size, addr);
 		int i;
 		for (i=0; i<size; i++){
@@ -45,11 +49,12 @@ int main(){
 		}
 		printf("\n");
 	} else {
-		int bufferSize = 1024;
+		int bufferSize = 512;
 		char *value = malloc(bufferSize);
 		int byteRead;
 		do{
 			byteRead = pread(fd, value, bufferSize, addr);
+			debug(rc > 0, "pread return %ld", addr);
 			int i;
 			for(i=0; i<byteRead; i++){
 				printf("%c", value[i]);
